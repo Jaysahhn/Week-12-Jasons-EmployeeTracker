@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS department;
 DROP DATABASE IF EXISTS employee_tracker;
 
--- create 
+-- creates and use
 CREATE DATABASE employee_tracker;
 
 USE employee_tracker;

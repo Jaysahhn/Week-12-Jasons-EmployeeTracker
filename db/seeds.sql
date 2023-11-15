@@ -16,6 +16,7 @@ INSERT INTO roles (title, salary, department_id) VALUES
 ("Legal Team Lead", 250000.00, 3),
 ("Lawyer", 190000.00, 3);
 
+-- seed data for employee table
 INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES
 ("Robert", "Byrd", 1, NULL),
 ("Cody", "Olfati", 2, 1),

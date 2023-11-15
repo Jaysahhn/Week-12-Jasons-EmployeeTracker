@@ -38,7 +38,7 @@ function startApplication() {
                 'Exit',
             ],
         })
-        .then((answer) => {
+        .then(async (answer) => {
             switch (answer.action) {
                 case 'View all departments':
                     viewAllDepartments();
@@ -76,8 +76,8 @@ function startApplication() {
                     deleteRole();
                     break;
 
-                case 'Delete an employee':
-                    deleteEmployee();
+                case 'Delete a employee':
+                    await deleteEmployee();
                     break;
 
                 case 'Exit':
@@ -90,7 +90,8 @@ function startApplication() {
 async function viewAllDepartments() {
     try {
         const results = await queryAsync(`SELECT * FROM department`);
-        console.log("Departments:", results);
+        console.table(results);
+
         startApplication();
     } catch (error) {
         console.error(error);
@@ -101,7 +102,7 @@ async function viewAllDepartments() {
 async function viewAllRoles() {
     try {
         const results = await queryAsync(`SELECT * FROM roles`);
-        console.log("Roles:", results);
+        console.table(results);
         startApplication();
     } catch (error) {
         console.error(error);
@@ -113,7 +114,7 @@ async function viewAllRoles() {
 async function viewAllEmployees() {
     try {
         const results = await queryAsync(`SELECT * FROM employee`);
-        console.log("Employees:", results);
+        console.table(results);
         startApplication();
     } catch (error) {
         console.error(error);
@@ -289,23 +290,56 @@ async function deleteDepartment() {
         await queryAsync('DELETE FROM department WHERE id = ?', answer.departmentId);
 
         console.log('Department deleted successfully!');
+
+        const updatedDepartments = await queryAsync('SELECT * FROM department');
+        console.table(updatedDepartments);
+
         startApplication();
+
     } catch (error) {
         console.error('Error deleting department:', error);
         startApplication();
     };
 };
 
-// under construction
-async function deleteRole() { };
+// deletes role
+async function deleteRole() {
+    try {
+        const roles = await queryAsync('SELECT id, title FROM roles');
 
-// under construction
+        const roleChoices = roles.map((roles) => ({
+            name: roles.title,
+            value: roles.id,
+        }));
+
+        const answer = await inquirer.prompt({
+            type: 'list',
+            name: 'roleId',
+            message: 'Select the role to delete:',
+            choices: roleChoices,
+        });
+
+        await queryAsync('DELETE FROM roles WHERE id = ?', answer.roleId);
+
+        console.log('Role deleted successfully!');
+
+        const updatedRoles = await queryAsync('SELECT * FROM roles');
+        console.table(updatedRoles);
+
+        startApplication();
+    } catch (error) {
+        console.error('Error deleting role:', error);
+        startApplication();
+    };
+};
+
+// deletes employee
 async function deleteEmployee() {
     try {
         const employees = await queryAsync('SELECT * FROM employee');
 
         const employeeChoices = employees.map((employee) => ({
-            name: employee.first_name,
+            name: `${employee.first_name} ${employee.last_name}`,
             value: employee.id,
         }));
 
@@ -319,9 +353,11 @@ async function deleteEmployee() {
         await queryAsync('DELETE FROM employee WHERE id = ?', answer.employeeId);
 
         console.log('Employee deleted successfully!');
+
         startApplication();
+
     } catch (error) {
         console.error('Error deleting employee:', error);
         startApplication();
-    }
-}
+    };
+};
