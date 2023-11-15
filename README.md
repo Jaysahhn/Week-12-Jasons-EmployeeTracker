@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a back-end command-line application that allows you to manage an employee database by being able to add/delete departments, roles, and employees. You can also update 
+This is a back-end command-line application that allows you to manage an employee database by being able to add/delete departments, roles, and employees. You can also update employee roles through the console.
 
 ## Installation
 
