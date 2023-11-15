@@ -10,7 +10,7 @@ Node Package Manager (NPM), Express.js, dotenv, Inquirer, mysql2
 
 ## Usage
 
-Link to Video - https://drive.google.com/file/d/1Kx1auLUU8NJbVS6nXotrCHA75UwAmsaV/view || 
+Link to Video - https://drive.google.com/file/d/1ZWDoxSEjugtozXQaWJTVH4a9-L5-Rqy8/view || 
 [Screenshot of Terminal](https://i.gyazo.com/ce4410421df62f8dffbb1b3e47a6cad9.png)
 
 ## Credits
